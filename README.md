@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # test_clean_architecture
 
 A new Flutter project.
@@ -14,3 +15,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# clean_architecture_fernosha
+>>>>>>> 73152d2c1e544d613f9c4a589edf436e0d04090c
