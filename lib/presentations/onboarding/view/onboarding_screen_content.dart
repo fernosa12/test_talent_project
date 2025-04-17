@@ -2,7 +2,6 @@ import 'package:test_clean_architecture/constant/app_assets.dart';
 
 import '../../../constant/app_constant.dart';
 
-
 class OnboardingContent {
   final String image;
   final String title;

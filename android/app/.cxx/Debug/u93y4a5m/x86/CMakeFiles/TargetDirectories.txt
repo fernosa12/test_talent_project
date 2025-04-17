@@ -1,0 +1,2 @@
+/Users/macbook/Documents/GitHub/test_talent_project/android/app/.cxx/Debug/u93y4a5m/x86/CMakeFiles/edit_cache.dir
+/Users/macbook/Documents/GitHub/test_talent_project/android/app/.cxx/Debug/u93y4a5m/x86/CMakeFiles/rebuild_cache.dir

@@ -7,12 +7,12 @@ class AppAssets {
   static const assetImagesDelivery = 'assets/images/pengiriman/';
   static const assetImagesTransaction = 'assets/images/transactions/';
   static const assetImagesProfile = 'assets/images/profile/';
- 
+
   //asset onboardings
   static const assetImagesOnboarding1 =
-      '${assetImagesOnboarding}onboarding1.webp';
+      '${assetImagesOnboarding}onboarding1.png';
   static const assetImagesOnboarding2 =
-      '${assetImagesOnboarding}onboarding2.webp';
+      '${assetImagesOnboarding}onboarding2.png';
   static const assetImagesOnboarding3 =
-      '${assetImagesOnboarding}onboarding3.webp';
+      '${assetImagesOnboarding}onboarding3.png';
 }

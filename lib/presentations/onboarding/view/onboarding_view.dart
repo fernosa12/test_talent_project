@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:test_clean_architecture/constant/app_color.dart';
 import 'package:test_clean_architecture/core/local_database/local_database.dart';
 
-import '../../../constant/constant.dart';
 import '../../../lib.dart';
-import 'view.dart';
 
 @RoutePage()
 class OnBoardingView extends StatefulWidget {
@@ -22,7 +21,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF6C5CE7),
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Stack(
           children: [

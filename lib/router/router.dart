@@ -21,6 +21,10 @@ class AppRouter extends RootStackRouter {
           initial: true,
           children: [
             AutoRoute(
+              page: OnBoardingRoute.page,
+              guards: const [],
+            ),
+            AutoRoute(
               initial: true,
               page: LoginRoute.page,
               guards: const [
@@ -31,10 +35,6 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: HomeRoute.page,
-          guards: const [],
-        ),
-        AutoRoute(
-          page: OnBoardingRoute.page,
           guards: const [],
         ),
       ];
