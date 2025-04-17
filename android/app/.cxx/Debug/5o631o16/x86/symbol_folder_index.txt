@@ -1,0 +1,1 @@
+/Users/macbook/talent_project_test/clean_architecture_fernosha/build/app/intermediates/cxx/Debug/5o631o16/obj/x86

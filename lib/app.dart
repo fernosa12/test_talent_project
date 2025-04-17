@@ -17,12 +17,6 @@ class App extends StatelessWidget {
         BlocProvider<AuthCubit>(
           create: (context) => di(),
         ),
-        // BlocProvider<WishlistCubit>(
-        //   create: (context) => di(),
-        // ),
-        // BlocProvider<SellerReplyTemplateCubit>(
-        //   create: (context) => di(),
-        // ),
       ],
       child: MaterialApp.router(
         title: 'Test Clean Architecture',
