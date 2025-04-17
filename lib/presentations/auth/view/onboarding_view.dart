@@ -21,7 +21,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF6C5CE7),
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Stack(
           children: [
@@ -42,121 +42,110 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    const SizedBox(height: 300),
+                    const SizedBox(height: 20), // Optional space for text
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        contents[index].title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 38,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        contents[index].description,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    // Add page indicator only below description
+                    if (_currentPage != contents.length - 1)
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 30),
+                            child: SmoothPageIndicator(
+                              controller: _pageController,
+                              count: contents.length,
+                              effect: const WormEffect(
+                                dotHeight: 8,
+                                dotWidth: 8,
+                                spacing: 8,
+                                activeDotColor: Color(0xFF6C5CE7),
+                                dotColor: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  context.router.replace(const LoginRoute());
+                                },
+                                child: const Text(
+                                  'Skip',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      ExcludeSemantics(
+                        excluding: true,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 24),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                await di<IAppPreferences>().setFirstTimeDone();
+                                if (context.mounted) {
+                                  context.router.replace(const LoginRoute());
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF6C5CE7),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text(
+                                'Mulai',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 );
               },
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Stack(
-                children: [
-                  IgnorePointer(
-                    child: Container(
-                      width: double.infinity,
-                      height: 300,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  ExcludeSemantics(
-                    excluding: true,
-                    child: SizedBox(
-                      height: 300,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 24),
-                            Text(
-                              contents[_currentPage].title,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textColorBold,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              contents[_currentPage].description,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: AppColors.textColor,
-                              ),
-                            ),
-                            const Spacer(),
-                            if (_currentPage != contents.length - 1)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 30),
-                                child: SmoothPageIndicator(
-                                  controller: _pageController,
-                                  count: contents.length,
-                                  effect: const WormEffect(
-                                    dotHeight: 8,
-                                    dotWidth: 8,
-                                    spacing: 8,
-                                    activeDotColor: Color(0xFF6C5CE7),
-                                    dotColor: Colors.grey,
-                                  ),
-                                ),
-                              )
-                            else
-                              ExcludeSemantics(
-                                excluding: true,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 24),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        await di<IAppPreferences>()
-                                            .setFirstTimeDone();
-                                        if (context.mounted) {
-                                          context.router
-                                              .replace(const LoginRoute());
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color(0xFF6C5CE7),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                      child: const Text(
-                                        'Mulai',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Positioned Skip Button at the bottom-right
           ],
         ),
       ),
