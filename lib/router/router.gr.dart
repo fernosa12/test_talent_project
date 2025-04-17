@@ -29,6 +29,25 @@ class AuthRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CourseView]
+class CourseRoute extends PageRouteInfo<void> {
+  const CourseRoute({List<PageRouteInfo>? children})
+      : super(
+          CourseRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CourseRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CourseView();
+    },
+  );
+}
+
+/// generated route for
 /// [HomeView]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})

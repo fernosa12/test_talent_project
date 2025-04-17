@@ -37,6 +37,10 @@ class AppRouter extends RootStackRouter {
           page: HomeRoute.page,
           guards: const [],
         ),
+        AutoRoute(
+          page: CourseRoute.page,
+          guards: const [],
+        ),
       ];
 
   @override
