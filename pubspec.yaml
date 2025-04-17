@@ -1,12 +1,13 @@
 name: test_clean_architecture
 description: "Test Clean Architecture"
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: ">=3.4.3 <4.0.0"
 dependencies:
   auto_route: ^9.2.2
+  get: ^4.7.2
   carousel_slider_plus: ^7.0.2
   collection: ^1.18.0
   connectivity_plus: ^6.0.3
@@ -32,7 +33,6 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   flutter_svg: ^2.0.10+1
   flutter_svg_provider: ^1.0.7
-  fluttertoast: ^8.2.6
   freezed_annotation: ^2.4.4
   gap: ^3.0.1
   get_it: ^8.0.2
@@ -54,6 +54,8 @@ dependencies:
   syncfusion_flutter_charts: ^27.2.3
   textfield_tags: ^3.0.1
   webview_flutter: ^4.8.0
+  smooth_page_indicator: ^1.2.1
+  fluttertoast: ^8.2.12
 
 dev_dependencies:
   auto_route_generator: ^9.0.0
@@ -66,8 +68,8 @@ dev_dependencies:
   mockito: ^5.4.4
 flutter:
   uses-material-design: true
-  # assets:
-  #   - assets/
+  assets:
+    - assets/images/
   #   - assets/images/
   #   - assets/images/profile/
   #   - assets/images/pengiriman/

@@ -1,0 +1,1 @@
+/Users/macbook/Documents/GitHub/clean_architecture_fernosha/build/app/intermediates/cxx/Debug/11241a1q/obj/armeabi-v7a

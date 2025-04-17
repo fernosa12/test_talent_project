@@ -1,0 +1,2 @@
+/Users/macbook/Documents/GitHub/clean_architecture_fernosha/android/app/.cxx/Debug/11241a1q/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/macbook/Documents/GitHub/clean_architecture_fernosha/android/app/.cxx/Debug/11241a1q/armeabi-v7a/CMakeFiles/rebuild_cache.dir
