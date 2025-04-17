@@ -21,11 +21,11 @@ class AppRouter extends RootStackRouter {
           initial: true,
           children: [
             AutoRoute(
+              initial: true,
               page: OnBoardingRoute.page,
               guards: const [],
             ),
             AutoRoute(
-              initial: true,
               page: LoginRoute.page,
               guards: const [
                 // GuestGuard(),

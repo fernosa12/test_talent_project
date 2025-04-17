@@ -10,7 +10,7 @@ class AppAssets {
 
   //asset onboardings
   static const assetImagesOnboarding1 =
-      '${assetImagesOnboarding}onboarding1.png';
+      '${assetImagesOnboarding}onboarding.png';
   static const assetImagesOnboarding2 =
       '${assetImagesOnboarding}onboarding2.png';
   static const assetImagesOnboarding3 =
