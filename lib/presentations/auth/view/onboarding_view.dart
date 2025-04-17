@@ -1,9 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:test_clean_architecture/constant/app_color.dart';
-import 'package:test_clean_architecture/core/local_database/local_database.dart';
-
 import '../../../lib.dart';
 
 @RoutePage()
@@ -106,41 +103,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                           ),
                         ],
                       )
-                    else
-                      ExcludeSemantics(
-                        excluding: true,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 24),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                await di<IAppPreferences>().setFirstTimeDone();
-                                if (context.mounted) {
-                                  context.router.replace(const LoginRoute());
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF6C5CE7),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text(
-                                'Mulai',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                   ],
                 );
               },
