@@ -11,7 +11,10 @@ class DioTokenInterceptor implements InterceptorsWrapper {
   final AuthCubit Function() getAuthCubit;
   final AppRouter router;
 
-  DioTokenInterceptor(this.getAuthCubit, this.router);
+  DioTokenInterceptor(
+    this.getAuthCubit,
+    this.router,
+  );
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.response?.statusCode == HttpStatus.unauthorized) {

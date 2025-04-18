@@ -48,6 +48,25 @@ class CourseRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DetailCourseView]
+class DetailCourseRoute extends PageRouteInfo<void> {
+  const DetailCourseRoute({List<PageRouteInfo>? children})
+      : super(
+          DetailCourseRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DetailCourseRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DetailCourseView();
+    },
+  );
+}
+
+/// generated route for
 /// [HomeView]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
