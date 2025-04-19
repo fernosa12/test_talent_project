@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:test_clean_architecture/presentations/audio/cubit/audio_cubit.dart';
 import 'package:test_clean_architecture/presentations/audio/cubit/audio_state.dart';
-
 import '../../../lib.dart';
 
 @RoutePage()
@@ -12,7 +12,9 @@ class AudioDetailView extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   State<AudioDetailView> createState() => _AudioDetailViewState();
-   Widget wrappedRoute(BuildContext context) {
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
     return BlocProvider<AudioCubit>(
       create: (context) => di(),
       child: this,
@@ -21,20 +23,58 @@ class AudioDetailView extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _AudioDetailViewState extends State<AudioDetailView> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
-  double progress = 80; // contoh: 80 detik dari total
-  final double totalDuration = 216; // 3 menit 36 detik = 216 detik
-
-  String formatDuration(double seconds) {
-    final mins = seconds ~/ 60;
-    final secs = (seconds % 60).toInt().toString().padLeft(2, '0');
-    return '$mins:$secs';
-  }
+  Duration current = Duration.zero;
+  Duration total = Duration(seconds: 1); // default to avoid divide by zero
 
   @override
   void initState() {
-    context.read<AudioCubit>().detailAudio();
     super.initState();
+    context.read<AudioCubit>().detailAudio();
+
+    _audioPlayer.positionStream.listen((pos) {
+      setState(() {
+        current = pos;
+      });
+    });
+
+    _audioPlayer.durationStream.listen((dur) {
+      if (dur != null) {
+        setState(() {
+          total = dur;
+        });
+      }
+    });
+
+    _audioPlayer.playerStateStream.listen((state) {
+      setState(() {
+        isPlaying = state.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  String formatDuration(Duration duration) {
+    return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+  }
+
+  void _togglePlay(String url) async {
+    if (_audioPlayer.playing) {
+      await _audioPlayer.pause();
+    } else {
+      try {
+        await _audioPlayer.setUrl(url);
+        await _audioPlayer.play();
+      } catch (e) {
+        debugPrint("Error loading audio: $e");
+      }
+    }
   }
 
   @override
@@ -65,37 +105,39 @@ class _AudioDetailViewState extends State<AudioDetailView> {
       ),
       body: BlocBuilder<AudioCubit, AudioState>(
         builder: (context, state) {
+          final audioUrl = state.detailAudio?.path?.first.url ?? '';
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               children: [
-                // Cover Image
+                // Cover
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
                     state.detailAudio?.thumbnail?.first.url ?? '',
-                    height: 300,
+                    height: context.sizeHeight * 0.5,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(height: 16),
-
-                // Title and author
-                Text("How to build intentional UX",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis),
-                const SizedBox(height: 4),
-                Text("Emily · UI/UX Designer",
-                    style: TextStyle(fontSize: 14, color: Colors.grey)),
-
-                const SizedBox(height: 12),
-
-                // Tags and metadata
+                SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(state.detailAudio?.title ?? 'No Title',
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
+                ),
+                SizedBox(height: 4),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text("Emily · UI/UX Designer",
+                      style: TextStyle(fontSize: 14, color: Colors.grey)),
+                ),
+                SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -108,35 +150,26 @@ class _AudioDetailViewState extends State<AudioDetailView> {
                         style: TextStyle(color: Colors.white, fontSize: 12)),
                   ],
                 ),
-
-                // Slider progress
                 Slider(
-                  value: progress,
+                  value: current.inSeconds.toDouble(),
                   min: 0,
-                  max: totalDuration,
-                  activeColor: Colors.white,
-                  inactiveColor: Colors.grey.shade700,
+                  max: total.inSeconds.toDouble(),
                   onChanged: (value) {
-                    setState(() {
-                      progress = value;
-                    });
+                    _audioPlayer.seek(Duration(seconds: value.toInt()));
                   },
+                  activeColor: Colors.white,
+                  inactiveColor: Colors.grey,
                 ),
-
-                // Durasi
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(formatDuration(progress),
+                    Text(formatDuration(current),
                         style: TextStyle(color: Colors.white)),
-                    Text(formatDuration(totalDuration),
+                    Text(formatDuration(total),
                         style: TextStyle(color: Colors.white)),
                   ],
                 ),
-
-                const SizedBox(height: 12),
-
-                // Kontrol playback
+                SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -144,11 +177,7 @@ class _AudioDetailViewState extends State<AudioDetailView> {
                     Icon(Icons.skip_previous_rounded,
                         color: Colors.white, size: 36),
                     GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isPlaying = !isPlaying;
-                        });
-                      },
+                      onTap: () => _togglePlay(audioUrl),
                       child: CircleAvatar(
                         radius: 28,
                         backgroundColor: Colors.white,
