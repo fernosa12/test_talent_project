@@ -1,14 +1,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_clean_architecture/presentations/course/cubit/course_cubit.dart';
 
 import '../../../lib.dart';
 
 @RoutePage()
-class CourseView extends StatefulWidget {
+class CourseView extends StatefulWidget implements AutoRouteWrapper {
   const CourseView({super.key});
 
   @override
   State<CourseView> createState() => _CourseViewState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<CourseCubit>(
+      create: (context) => di(),
+      child: this,
+    );
+  }
 }
 
 class _CourseViewState extends State<CourseView> with TickerProviderStateMixin {
@@ -85,7 +95,6 @@ class _CourseViewState extends State<CourseView> with TickerProviderStateMixin {
           ),
 
           // Tab bar below search
-
           TabBar(
             tabAlignment: TabAlignment.center,
             controller: _tabController!,
@@ -124,43 +133,87 @@ class _CourseViewState extends State<CourseView> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController!,
               children: List.generate(4, (index) {
-                return ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: 5,
-                  itemBuilder: (context, i) {
-                    return InkWell(
-                      onTap: () {
-                        context.router.push(const DetailCourseRoute());
-                      },
-                      child: Card(
-                        color: Color(0xFF1A1A1C),
-                        margin: EdgeInsets.only(bottom: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                return BlocBuilder<CourseCubit, CourseState>(
+                  builder: (context, state) {
+                    // If there are no courses available
+                    if (state.courses.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'No courses available.',
+                          style: TextStyle(color: Colors.white),
                         ),
-                        child: ListTile(
-                          leading: Container(
-                            width: 60,
-                            height: 60,
+                      );
+                    }
+
+                    return ListView.builder(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: state.courses.length,
+                      itemBuilder: (context, index) {
+                        final course = state.courses[index];
+
+                        return InkWell(
+                          onTap: () {
+                            context.router.push(
+                              DetailCourseRoute(),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 12),
+                            padding: EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade800,
-                              borderRadius: BorderRadius.circular(8),
+                              color: Color(0xFF1A1A1C),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Icon(Icons.play_circle_fill,
-                                color: Colors.white),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade800,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Image.network(
+                                    course.path?.first.url ?? '',
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Icon(Icons.error,
+                                          color: Colors.red);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        course.title ?? 'Untitled',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        'Mentor: ${course.author ?? 'Unknown'} · ${course.path?.length ?? 0} Lessons',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                              ],
+                            ),
                           ),
-                          title: Text(
-                            'Dummy Course ${i + 1}',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          subtitle: Text(
-                            'Mentor Name · 1h 20m',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          trailing: Icon(Icons.arrow_forward_ios,
-                              color: Colors.white, size: 16),
-                        ),
-                      ),
+                        );
+                      },
                     );
                   },
                 );

@@ -105,10 +105,15 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     SizedBox(width: 20), // Spacing between the images
                     // Second image
-                    Image.asset(
-                      'assets/images/home/audio_icon.png',
-                      width: 70,
-                      height: 70,
+                    InkWell(
+                      onTap: () {
+                        context.router.push(const AudioRoute());
+                      },
+                      child: Image.asset(
+                        'assets/images/home/audio_icon.png',
+                        width: 70,
+                        height: 70,
+                      ),
                     ),
                   ],
                 ),

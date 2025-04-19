@@ -10,6 +10,44 @@
 part of 'router.dart';
 
 /// generated route for
+/// [AudioDetailView]
+class AudioDetailRoute extends PageRouteInfo<void> {
+  const AudioDetailRoute({List<PageRouteInfo>? children})
+      : super(
+          AudioDetailRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AudioDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AudioDetailView();
+    },
+  );
+}
+
+/// generated route for
+/// [AudioView]
+class AudioRoute extends PageRouteInfo<void> {
+  const AudioRoute({List<PageRouteInfo>? children})
+      : super(
+          AudioRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AudioRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AudioView();
+    },
+  );
+}
+
+/// generated route for
 /// [AuthView]
 class AuthRoute extends PageRouteInfo<void> {
   const AuthRoute({List<PageRouteInfo>? children})
@@ -42,7 +80,7 @@ class CourseRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CourseView();
+      return WrappedRoute(child: const CourseView());
     },
   );
 }
@@ -61,7 +99,7 @@ class DetailCourseRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const DetailCourseView();
+      return WrappedRoute(child: const DetailCourseView());
     },
   );
 }

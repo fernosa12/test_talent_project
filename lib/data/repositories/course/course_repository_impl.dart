@@ -9,14 +9,29 @@ class CourseRepositoryImpl implements CourseRepository {
 
   CourseRepositoryImpl(this.api, this.networkInfo);
   @override
-  Future<Either<Failure ,List <CoursesResponse>>> getCourse(
-      ) async {
+  Future<Either<Failure, List<CoursesResponse>>> getCourse() async {
     final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(Failure.noConnection());
     }
     try {
       final response = await api.getCourse();
+      if (!response.success) {
+        return Left(Failure.serverError(response.message));
+      }
+      return Right(response.data!);
+    } catch (e) {
+      return Left(Failure.parseFromException(e));
+    }
+  }
+  @override
+  Future<Either<Failure, DetailCourse>> getDetailCourse(String? id) async {
+    final isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(Failure.noConnection());
+    }
+    try {
+      final response = await api.getDetailCourse(id);
       if (!response.success) {
         return Left(Failure.serverError(response.message));
       }

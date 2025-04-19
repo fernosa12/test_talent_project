@@ -1,6 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:test_clean_architecture/data/api/courses/courses_api.dart';
+import 'package:test_clean_architecture/presentations/audio/cubit/audio_cubit.dart';
+import 'package:test_clean_architecture/presentations/course/cubit/course_cubit.dart';
 
 // import '../domain/usecases/change_password_usecase.dart';
 // import '../domain/usecases/get_banners_usecase.dart';
@@ -32,22 +35,36 @@ setupInjection() {
 
 void _datasources() {
   di.registerSingleton<AuthApi>(AuthApiImpl(di()));
+  di.registerSingleton<CoursesApi>(CoursesApiImpl(di()));
+  di.registerSingleton<AudioApi>(AudioApiImpl(di()));
 }
 
 void _repositories() {
   // _repositories
   di.registerSingleton<AuthRepository>(AuthRepositoryImpl(di(), di()));
+  di.registerSingleton<CourseRepository>(CourseRepositoryImpl(di(), di()));
+  di.registerSingleton<AudioRepository>(AudioRepositoryImpl(di(), di()));
 }
 
 void _useCases() {
   // _useCases
   di.registerSingleton<LoginUseCase>(LoginUseCase(di()));
+  di.registerSingleton<GetCourseUsecase>(GetCourseUsecase(di()));
+  di.registerSingleton<DetailCourseUsecase>(DetailCourseUsecase(di()));
+  di.registerSingleton<DetailAudioUsecase>(DetailAudioUsecase(di()));
 }
 
 void _cubits() {
   di.registerSingleton<AuthCubit>(AuthCubit(
     di(),
   ));
+  di.registerFactory(() => CourseCubit(
+        di(),
+        di(),
+      ));
+  di.registerFactory(() => AudioCubit(
+        di(),
+      ));
 }
 
 void _utils() {

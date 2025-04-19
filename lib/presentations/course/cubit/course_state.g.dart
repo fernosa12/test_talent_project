@@ -12,9 +12,13 @@ _$CourseStateImpl _$$CourseStateImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => CoursesResponse.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      detailCourse: json['detailCourse'] == null
+          ? null
+          : DetailCourse.fromJson(json['detailCourse'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$CourseStateImplToJson(_$CourseStateImpl instance) =>
     <String, dynamic>{
       'courses': instance.courses,
+      'detailCourse': instance.detailCourse,
     };

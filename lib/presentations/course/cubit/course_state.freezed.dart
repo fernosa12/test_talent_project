@@ -21,6 +21,7 @@ CourseState _$CourseStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CourseState {
   List<CoursesResponse> get courses => throw _privateConstructorUsedError;
+  DetailCourse? get detailCourse => throw _privateConstructorUsedError;
 
   /// Serializes this CourseState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +39,9 @@ abstract class $CourseStateCopyWith<$Res> {
           CourseState value, $Res Function(CourseState) then) =
       _$CourseStateCopyWithImpl<$Res, CourseState>;
   @useResult
-  $Res call({List<CoursesResponse> courses});
+  $Res call({List<CoursesResponse> courses, DetailCourse? detailCourse});
+
+  $DetailCourseCopyWith<$Res>? get detailCourse;
 }
 
 /// @nodoc
@@ -57,13 +60,32 @@ class _$CourseStateCopyWithImpl<$Res, $Val extends CourseState>
   @override
   $Res call({
     Object? courses = null,
+    Object? detailCourse = freezed,
   }) {
     return _then(_value.copyWith(
       courses: null == courses
           ? _value.courses
           : courses // ignore: cast_nullable_to_non_nullable
               as List<CoursesResponse>,
+      detailCourse: freezed == detailCourse
+          ? _value.detailCourse
+          : detailCourse // ignore: cast_nullable_to_non_nullable
+              as DetailCourse?,
     ) as $Val);
+  }
+
+  /// Create a copy of CourseState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DetailCourseCopyWith<$Res>? get detailCourse {
+    if (_value.detailCourse == null) {
+      return null;
+    }
+
+    return $DetailCourseCopyWith<$Res>(_value.detailCourse!, (value) {
+      return _then(_value.copyWith(detailCourse: value) as $Val);
+    });
   }
 }
 
@@ -75,7 +97,10 @@ abstract class _$$CourseStateImplCopyWith<$Res>
       __$$CourseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CoursesResponse> courses});
+  $Res call({List<CoursesResponse> courses, DetailCourse? detailCourse});
+
+  @override
+  $DetailCourseCopyWith<$Res>? get detailCourse;
 }
 
 /// @nodoc
@@ -92,12 +117,17 @@ class __$$CourseStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? courses = null,
+    Object? detailCourse = freezed,
   }) {
     return _then(_$CourseStateImpl(
       courses: null == courses
           ? _value._courses
           : courses // ignore: cast_nullable_to_non_nullable
               as List<CoursesResponse>,
+      detailCourse: freezed == detailCourse
+          ? _value.detailCourse
+          : detailCourse // ignore: cast_nullable_to_non_nullable
+              as DetailCourse?,
     ));
   }
 }
@@ -105,7 +135,8 @@ class __$$CourseStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CourseStateImpl extends _CourseState {
-  _$CourseStateImpl({final List<CoursesResponse> courses = const []})
+  _$CourseStateImpl(
+      {final List<CoursesResponse> courses = const [], this.detailCourse})
       : _courses = courses,
         super._();
 
@@ -122,8 +153,11 @@ class _$CourseStateImpl extends _CourseState {
   }
 
   @override
+  final DetailCourse? detailCourse;
+
+  @override
   String toString() {
-    return 'CourseState(courses: $courses)';
+    return 'CourseState(courses: $courses, detailCourse: $detailCourse)';
   }
 
   @override
@@ -131,13 +165,15 @@ class _$CourseStateImpl extends _CourseState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CourseStateImpl &&
-            const DeepCollectionEquality().equals(other._courses, _courses));
+            const DeepCollectionEquality().equals(other._courses, _courses) &&
+            (identical(other.detailCourse, detailCourse) ||
+                other.detailCourse == detailCourse));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_courses));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_courses), detailCourse);
 
   /// Create a copy of CourseState
   /// with the given fields replaced by the non-null parameter values.
@@ -156,8 +192,9 @@ class _$CourseStateImpl extends _CourseState {
 }
 
 abstract class _CourseState extends CourseState {
-  factory _CourseState({final List<CoursesResponse> courses}) =
-      _$CourseStateImpl;
+  factory _CourseState(
+      {final List<CoursesResponse> courses,
+      final DetailCourse? detailCourse}) = _$CourseStateImpl;
   _CourseState._() : super._();
 
   factory _CourseState.fromJson(Map<String, dynamic> json) =
@@ -165,6 +202,8 @@ abstract class _CourseState extends CourseState {
 
   @override
   List<CoursesResponse> get courses;
+  @override
+  DetailCourse? get detailCourse;
 
   /// Create a copy of CourseState
   /// with the given fields replaced by the non-null parameter values.

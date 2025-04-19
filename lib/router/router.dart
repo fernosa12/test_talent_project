@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 
 import '../di/di.dart';
 import '../presentations/presentations.dart';
@@ -43,6 +44,14 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: DetailCourseRoute.page,
+          guards: const [],
+        ),
+        AutoRoute(
+          page: AudioRoute.page,
+          guards: const [],
+        ),
+        AutoRoute(
+          page: AudioDetailRoute.page,
           guards: const [],
         ),
       ];

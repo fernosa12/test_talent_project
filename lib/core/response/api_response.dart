@@ -15,9 +15,15 @@ class ApiResponse<T> extends Equatable {
   factory ApiResponse.fromResponse(
       Response response, T Function(dynamic json) fromJson) {
     final isSuccess = response.statusCode.toString().startsWith('2');
+    String message = '';
+    try {
+      message = response.data['message'] ?? '';
+    } catch (e) {
+      message = '';
+    }
     return ApiResponse(
       success: isSuccess,
-      message: response.data['message'] ?? '',
+      message: message,
       data: isSuccess ? fromJson(response.data) : null,
     );
   }

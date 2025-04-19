@@ -9,11 +9,13 @@ export 'course_state.dart';
 class CourseCubit extends HydratedCubit<CourseState> {
   CourseCubit(
     this._courseUsecase,
+    this._detailCourse,
   ) : super(CourseState()) {
     getCourse();
   }
 
   final GetCourseUsecase _courseUsecase;
+  final DetailCourseUsecase _detailCourse;
 
   @override
   CourseState? fromJson(Map<String, dynamic> json) {
@@ -34,6 +36,29 @@ class CourseCubit extends HydratedCubit<CourseState> {
       },
       (courses) {
         emit(state.copyWith(courses: courses));
+      },
+    );
+  }
+
+  detailCourse(
+   
+  ) async {
+    final response = await _detailCourse(
+      DetailCourseParam(
+        id: '',
+      ),
+    );
+
+    if (isClosed) return;
+
+    response.fold(
+      (failure) {
+        AppDialog.error(failure.message);
+        emit(state.copyWith(detailCourse: null));
+      },
+      (detailCourse) async {
+        print("Data Detail Course: ${detailCourse}");
+        emit(state.copyWith(detailCourse: detailCourse));
       },
     );
   }

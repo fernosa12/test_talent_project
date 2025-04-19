@@ -11,6 +11,7 @@ class CourseState with _$CourseState {
 
   factory CourseState({
     @Default([]) List<CoursesResponse> courses,
+    DetailCourse? detailCourse,
   }) = _CourseState;
 
   factory CourseState.fromJson(Map<String, dynamic> json) =>
