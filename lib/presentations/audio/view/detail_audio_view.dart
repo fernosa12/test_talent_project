@@ -26,7 +26,7 @@ class _AudioDetailViewState extends State<AudioDetailView> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
   Duration current = Duration.zero;
-  Duration total = Duration(seconds: 1); // default to avoid divide by zero
+  Duration total = Duration(seconds: 1); 
 
   @override
   void initState() {
