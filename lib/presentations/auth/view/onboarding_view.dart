@@ -39,7 +39,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    const SizedBox(height: 20), // Optional space for text
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -64,24 +64,23 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    // Add page indicator only below description
-                    if (_currentPage != contents.length - 1)
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 30),
-                            child: SmoothPageIndicator(
-                              controller: _pageController,
-                              count: contents.length,
-                              effect: const WormEffect(
-                                dotHeight: 8,
-                                dotWidth: 8,
-                                spacing: 8,
-                                activeDotColor: Color(0xFF6C5CE7),
-                                dotColor: Colors.grey,
-                              ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 30),
+                          child: SmoothPageIndicator(
+                            controller: _pageController,
+                            count: contents.length,
+                            effect: const WormEffect(
+                              dotHeight: 8,
+                              dotWidth: 8,
+                              spacing: 8,
+                              activeDotColor: Color(0xFF6C5CE7),
+                              dotColor: Colors.grey,
                             ),
                           ),
+                        ),
+                        if (_currentPage != contents.length - 1)
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Align(
@@ -101,13 +100,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                               ),
                             ),
                           ),
-                        ],
-                      )
+                      ],
+                    )
                   ],
                 );
               },
             ),
-            // Positioned Skip Button at the bottom-right
           ],
         ),
       ),
